@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import type { ExchangeRate } from '../types/index.js';
 
 const API_KEY = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
@@ -58,13 +59,8 @@ export const useExchangeRate = () => {
         setError(null);
 
         try {
-            const response = await fetch(EXCHANGE_RATE_API);
-
-            if (!response.ok) {
-                throw new Error(`API error: ${response.status}`);
-            }
-
-            const data = await response.json();
+            const response = await axios.get(EXCHANGE_RATE_API);
+            const data = response.data;
 
             if (data.result === 'error') {
                 throw new Error(data['error-type'] || 'API error');
