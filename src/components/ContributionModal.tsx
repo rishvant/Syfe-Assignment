@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import type { Currency } from '../types/index.js';
 import { formatDateForInput } from '../utils/formatters';
 
 interface ContributionModalProps {
     isOpen: boolean;
     goalName: string;
+    currency: Currency;
     onClose: () => void;
     onAddContribution: (amount: number, date: string) => void;
 }
@@ -11,6 +13,7 @@ interface ContributionModalProps {
 export const ContributionModal: React.FC<ContributionModalProps> = ({
     isOpen,
     goalName,
+    currency,
     onClose,
     onAddContribution,
 }) => {
@@ -86,10 +89,10 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4 animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md p-4 animate-fadeIn"
             onClick={handleBackdropClick}
         >
-            <div className="glass-card rounded-3xl shadow-2xl max-w-md w-full transform transition-all animate-slideUp border border-gray-200">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all animate-slideUp border border-gray-200">
                 {/* Header with Gradient */}
                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-r from-emerald-500 to-teal-600 p-6 text-white">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
@@ -125,7 +128,7 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                         </label>
                         <div className="relative">
                             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-bold text-lg">
-                                $
+                                {currency === 'USD' ? '$' : '₹'}
                             </div>
                             <input
                                 id="contribution-amount"
@@ -137,8 +140,8 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                                 min="0"
                                 autoFocus
                                 className={`w-full pl-10 pr-4 py-3.5 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium text-lg ${errors.amount
-                                        ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
-                                        : 'border-gray-200 focus:border-emerald-500 focus:ring-emerald-100'
+                                    ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
+                                    : 'border-gray-200 focus:border-emerald-500 focus:ring-emerald-100'
                                     }`}
                             />
                         </div>
@@ -169,8 +172,8 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
                                 onChange={(e) => setDate(e.target.value)}
                                 max={formatDateForInput()}
                                 className={`w-full pl-12 pr-4 py-3.5 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${errors.date
-                                        ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
-                                        : 'border-gray-200 focus:border-emerald-500 focus:ring-emerald-100'
+                                    ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
+                                    : 'border-gray-200 focus:border-emerald-500 focus:ring-emerald-100'
                                     }`}
                             />
                         </div>

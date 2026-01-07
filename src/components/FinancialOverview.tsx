@@ -110,9 +110,9 @@ export const FinancialOverview: React.FC<FinancialOverviewProps> = ({
                     <p className="text-2xl font-bold text-white mb-1">{overallProgress.toFixed(1)}%</p>
 
                     {/* Mini Progress Bar */}
-                    <div className="relative h-1.5 bg-white bg-opacity-20 rounded-full overflow-hidden mt-2">
+                    <div className="mt-3 h-2 bg-white bg-opacity-20 rounded-full overflow-hidden">
                         <div
-                            className="absolute h-full bg-white bg-opacity-90 rounded-full transition-all duration-500"
+                            className="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transition-all duration-500"
                             style={{ width: `${Math.min(overallProgress, 100)}%` }}
                         ></div>
                     </div>

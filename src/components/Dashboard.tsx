@@ -32,11 +32,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
 
     const formatLastUpdated = (dateString: string) => {
         const date = new Date(dateString);
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+
+        if (diffMins < 60) {
+            if (diffMins < 1) return 'Just now';
+            return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
+        }
+
         return new Intl.DateTimeFormat('en-US', {
             month: 'short',
             day: 'numeric',
-            hour: '2-digit',
+            hour: 'numeric',
             minute: '2-digit',
+            hour12: true,
         }).format(date);
     };
 

@@ -6,6 +6,9 @@ import { FinancialOverview } from './components/FinancialOverview';
 import { GoalCard } from './components/GoalCard';
 import { ContributionModal } from './components/ContributionModal';
 import { AddGoalModal } from './components/AddGoalModal';
+import { EditGoalModal } from './components/EditGoalModal';
+import { DeleteConfirmModal } from './components/DeleteConfirmModal';
+import { ContributionsListModal } from './components/ContributionsListModal';
 import { EmptyState } from './components/EmptyState';
 
 function App() {
@@ -15,7 +18,10 @@ function App() {
 
   // Modal states
   const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
+  const [isEditGoalModalOpen, setIsEditGoalModalOpen] = useState(false);
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
   const [isContributionModalOpen, setIsContributionModalOpen] = useState(false);
+  const [isContributionsListModalOpen, setIsContributionsListModalOpen] = useState(false);
   const [selectedGoalId, setSelectedGoalId] = useState<string | null>(null);
 
   const handleAddGoal = (name: string, targetAmount: number, currency: Currency) => {
@@ -35,6 +41,11 @@ function App() {
   const handleOpenContributionModal = (goalId: string) => {
     setSelectedGoalId(goalId);
     setIsContributionModalOpen(true);
+  };
+
+  const handleOpenContributionsListModal = (goalId: string) => {
+    setSelectedGoalId(goalId);
+    setIsContributionsListModalOpen(true);
   };
 
   const handleAddContribution = (amount: number, date: string) => {
@@ -57,6 +68,35 @@ function App() {
       }
       return goal;
     }));
+  };
+
+  const handleOpenEditModal = (goalId: string) => {
+    setSelectedGoalId(goalId);
+    setIsEditGoalModalOpen(true);
+  };
+
+  const handleEditGoal = (goalId: string, name: string, targetAmount: number, currency: Currency) => {
+    setGoals(goals.map(goal => {
+      if (goal.id === goalId) {
+        return {
+          ...goal,
+          name,
+          targetAmount,
+          currency,
+        };
+      }
+      return goal;
+    }));
+  };
+
+  const handleOpenDeleteConfirm = (goalId: string) => {
+    setSelectedGoalId(goalId);
+    setIsDeleteConfirmModalOpen(true);
+  };
+
+  const handleDeleteGoal = () => {
+    if (!selectedGoalId) return;
+    setGoals(goals.filter(goal => goal.id !== selectedGoalId));
   };
 
   const selectedGoal = goals.find(g => g.id === selectedGoalId);
@@ -125,6 +165,9 @@ function App() {
                   goal={goal}
                   exchangeRates={exchangeRate}
                   onAddContribution={handleOpenContributionModal}
+                  onViewContributions={handleOpenContributionsListModal}
+                  onEditGoal={handleOpenEditModal}
+                  onDeleteGoal={handleOpenDeleteConfirm}
                 />
               ))}
             </div>
@@ -143,15 +186,49 @@ function App() {
       <ContributionModal
         isOpen={isContributionModalOpen}
         goalName={selectedGoal?.name || ''}
+        currency={selectedGoal?.currency || 'USD'}
         onClose={() => {
           setIsContributionModalOpen(false);
           setSelectedGoalId(null);
         }}
         onAddContribution={handleAddContribution}
       />
+
+      {/* Contributions List Modal */}
+      <ContributionsListModal
+        isOpen={isContributionsListModalOpen}
+        goalName={selectedGoal?.name || ''}
+        contributions={selectedGoal?.contributions || []}
+        currency={selectedGoal?.currency || 'USD'}
+        onClose={() => {
+          setIsContributionsListModalOpen(false);
+          setSelectedGoalId(null);
+        }}
+      />
+
+      {/* Edit Goal Modal */}
+      <EditGoalModal
+        isOpen={isEditGoalModalOpen}
+        goal={selectedGoal || null}
+        onClose={() => {
+          setIsEditGoalModalOpen(false);
+          setSelectedGoalId(null);
+        }}
+        onEditGoal={handleEditGoal}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={isDeleteConfirmModalOpen}
+        goalName={selectedGoal?.name || ''}
+        onClose={() => {
+          setIsDeleteConfirmModalOpen(false);
+          setSelectedGoalId(null);
+        }}
+        onConfirm={handleDeleteGoal}
+      />
     </div>
   );
 }
 
 export default App;
-  

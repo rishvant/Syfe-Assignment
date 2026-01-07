@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import type { Currency } from '../types/index.js';
+import type { Currency, Goal } from '../types/index.js';
 
-interface AddGoalModalProps {
+interface EditGoalModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onAddGoal: (name: string, targetAmount: number, currency: Currency) => void;
+    onEditGoal: (goalId: string, name: string, targetAmount: number, currency: Currency) => void;
+    goal: Goal | null;
 }
 
-export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onAddGoal }) => {
+export const EditGoalModal: React.FC<EditGoalModalProps> = ({ isOpen, onClose, onEditGoal, goal }) => {
     const [name, setName] = useState('');
     const [targetAmount, setTargetAmount] = useState('');
     const [currency, setCurrency] = useState<Currency>('USD');
     const [errors, setErrors] = useState<{ name?: string; targetAmount?: string }>({});
 
+    const isCurrencyLocked = !!(goal && goal.contributions.length > 0);
+
     useEffect(() => {
-        if (isOpen) {
-            setName('');
-            setTargetAmount('');
-            setCurrency('USD');
+        if (isOpen && goal) {
+            setName(goal.name);
+            setTargetAmount(goal.targetAmount.toString());
+            setCurrency(goal.currency);
             setErrors({});
         }
-    }, [isOpen]);
+    }, [isOpen, goal]);
 
     useEffect(() => {
         if (isOpen) {
@@ -60,8 +63,8 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (validateForm()) {
-            onAddGoal(name.trim(), parseFloat(targetAmount), currency);
+        if (validateForm() && goal) {
+            onEditGoal(goal.id, name.trim(), parseFloat(targetAmount), currency);
             onClose();
         }
     };
@@ -72,7 +75,7 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
         }
     };
 
-    if (!isOpen) return null;
+    if (!isOpen || !goal) return null;
 
     return (
         <div
@@ -87,10 +90,10 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
                         <div className="flex items-center gap-3">
                             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-2">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </div>
-                            <h3 className="text-2xl font-bold">Add New Goal</h3>
+                            <h3 className="text-2xl font-bold">Edit Goal</h3>
                         </div>
                         <button
                             onClick={onClose}
@@ -163,15 +166,21 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
                     <div>
                         <label htmlFor="currency" className="block text-sm font-bold text-gray-700 mb-2">
                             Currency
+                            {isCurrencyLocked && (
+                                <span className="text-xs text-amber-600 ml-2 font-normal">
+                                    (locked - goal has contributions)
+                                </span>
+                            )}
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
-                                onClick={() => setCurrency('USD')}
+                                onClick={() => !isCurrencyLocked && setCurrency('USD')}
+                                disabled={isCurrencyLocked}
                                 className={`px-4 py-3.5 border-2 rounded-xl font-bold transition-all ${currency === 'USD'
                                     ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
                                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                                    }`}
+                                    } ${isCurrencyLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="text-xl">$</span>
@@ -180,11 +189,12 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
                             </button>
                             <button
                                 type="button"
-                                onClick={() => setCurrency('INR')}
+                                onClick={() => !isCurrencyLocked && setCurrency('INR')}
+                                disabled={isCurrencyLocked}
                                 className={`px-4 py-3.5 border-2 rounded-xl font-bold transition-all ${currency === 'INR'
                                     ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
                                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                                    }`}
+                                    } ${isCurrencyLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="text-xl">₹</span>
@@ -207,7 +217,7 @@ export const AddGoalModal: React.FC<AddGoalModalProps> = ({ isOpen, onClose, onA
                             type="submit"
                             className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl btn-press"
                         >
-                            Add Goal
+                            Save Changes
                         </button>
                     </div>
                 </form>
