@@ -149,15 +149,6 @@ function App() {
         }}
         onAddContribution={handleAddContribution}
       />
-
-      {/* Footer */}
-      <footer className="mt-12 bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-center text-xs text-gray-500">
-            Built with React 18, TypeScript & Tailwind CSS
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
