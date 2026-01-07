@@ -1,8 +1,6 @@
-# Goal-Based Savings Planner
+# Syfe Goal-Based Savings Planner
 
-Production-quality savings planner built with React 18, TypeScript, and Tailwind CSS.
-
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### 1. Install Dependencies
 ```bash
@@ -27,3 +25,8 @@ npm run dev
 ```
 
 The app will be available at `http://localhost:5173`
+
+## Tech Stack
+- **React.js**  
+- **TypeScript**  
+- **Tailwind CSS**
