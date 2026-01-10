@@ -26,6 +26,9 @@ npm run dev
 
 The app will be available at `http://localhost:5173`
 
+## Live Demo
+[https://goal-planner-kappa.vercel.app](https://goal-planner-kappa.vercel.app)
+
 ## Tech Stack
 - **React.js**  
 - **TypeScript**  
