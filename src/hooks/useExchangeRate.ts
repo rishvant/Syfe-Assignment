@@ -74,11 +74,7 @@ export const useExchangeRate = () => {
             const newRate: ExchangeRate = {
                 USD: 1,
                 INR: rates.INR,
-                lastUpdated: data.time_last_update_unix
-                    ? new Date(data.time_last_update_unix * 1000).toISOString()
-                    : data.time_last_update_utc
-                        ? new Date(data.time_last_update_utc).toISOString()
-                        : new Date().toISOString(),
+                lastUpdated: new Date().toISOString(),
             };
 
             setExchangeRate(newRate);

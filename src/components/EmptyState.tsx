@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaRupeeSign } from "react-icons/fa";
 
 export const EmptyState: React.FC = () => {
     return (
@@ -7,9 +8,7 @@ export const EmptyState: React.FC = () => {
                 {/* Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="bg-indigo-100 rounded-2xl p-6">
-                        <svg className="w-16 h-16 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                        <FaRupeeSign className="w-16 h-16 text-indigo-600" />
                     </div>
                 </div>
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import type { Goal } from '../types/index.js';
 import { formatCurrency, calculateOverallProgress } from '../utils/formatters';
+import { TbCurrencyDollar } from 'react-icons/tb';
+import { MdCancel } from 'react-icons/md';
+import { FiRefreshCw } from 'react-icons/fi';
+import { FaCheckCircle, FaCheck } from 'react-icons/fa';
+import { BiTrendingUp } from 'react-icons/bi';
 
 interface DashboardProps {
     goals: Goal[];
@@ -58,9 +63,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                     <div className="flex items-center space-x-3">
                         <div className="flex items-center space-x-2">
                             <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
-                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <TbCurrencyDollar className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <p className="text-sm text-gray-600">Exchange Rate</p>
@@ -80,9 +83,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                     <div className="flex items-center gap-3">
                         {exchangeRateInfo.error && (
                             <p className="text-xs text-red-600 flex items-center">
-                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
+                                <MdCancel className="w-4 h-4 mr-1" />
                                 Using cached rate
                             </p>
                         )}
@@ -92,14 +93,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                             disabled={exchangeRateInfo.loading}
                             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-400 disabled:to-gray-500 text-white text-sm font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:scale-100 shadow-md"
                         >
-                            <svg
-                                className={`w-4 h-4 ${exchangeRateInfo.loading ? 'animate-spin' : ''}`}
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
+                            <FiRefreshCw className={`w-4 h-4 ${exchangeRateInfo.loading ? 'animate-spin' : ''}`} />
                             {exchangeRateInfo.loading ? 'Updating...' : 'Refresh Rate'}
                         </button>
                     </div>
@@ -111,9 +105,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                     <h2 className="text-2xl font-bold mb-2 sm:mb-0">Savings Dashboard</h2>
                     <div className="flex items-center space-x-2 text-sm bg-white bg-opacity-20 px-4 py-2 rounded-lg backdrop-blur-sm">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                        </svg>
+                        <BiTrendingUp className="w-5 h-5" />
                         <span className="font-semibold">{goals.length} {goals.length === 1 ? 'Goal' : 'Goals'}</span>
                     </div>
                 </div>
@@ -123,9 +115,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                     <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-5 border border-white border-opacity-20">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-blue-100">Total Target</span>
-                            <svg className="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <FaCheckCircle className="w-5 h-5 text-blue-200" />
                         </div>
                         <p className="text-3xl font-bold">{formatCurrency(totalTarget, 'USD')}</p>
                     </div>
@@ -134,9 +124,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                     <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-5 border border-white border-opacity-20">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-green-100">Total Saved</span>
-                            <svg className="w-5 h-5 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+                            <FaCheck className="w-5 h-5 text-green-200" />
                         </div>
                         <p className="text-3xl font-bold">{formatCurrency(totalSaved, 'USD')}</p>
                     </div>
@@ -145,9 +133,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ goals, exchangeRateInfo, o
                     <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-5 border border-white border-opacity-20">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-purple-100">Overall Progress</span>
-                            <svg className="w-5 h-5 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                            </svg>
+                            <BiTrendingUp className="w-5 h-5 text-purple-200" />
                         </div>
                         <p className="text-3xl font-bold">{overallProgress.toFixed(2)}%</p>
 

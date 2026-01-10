@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import type { Contribution, Currency } from '../types/index.js';
 import { formatCurrency } from '../utils/formatters';
+import { MdContentPaste, MdClose, MdCalendarToday } from 'react-icons/md';
 
 interface ContributionsListModalProps {
     isOpen: boolean;
@@ -52,7 +53,7 @@ export const ContributionsListModal: React.FC<ContributionsListModalProps> = ({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md p-4 animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-md p-4 animate-fadeIn"
             onClick={handleBackdropClick}
         >
             <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full transform transition-all animate-slideUp border border-gray-200 max-h-[90vh] flex flex-col">
@@ -61,10 +62,8 @@ export const ContributionsListModal: React.FC<ContributionsListModalProps> = ({
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
                     <div className="relative flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-2">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
+                            <div className="border border-white bg-opacity-20 backdrop-blur-sm rounded-xl p-2">
+                                <MdContentPaste className="w-6 h-6" />
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold">Contributions</h3>
@@ -73,12 +72,10 @@ export const ContributionsListModal: React.FC<ContributionsListModalProps> = ({
                         </div>
                         <button
                             onClick={onClose}
-                            className="text-white hover:bg-white hover:bg-opacity-20 transition-all p-2 rounded-xl"
+                            className="group text-white hover:bg-white hover:bg-opacity-20 transition-all p-2 rounded-xl"
                             aria-label="Close modal"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <MdClose className="w-6 h-6 group-hover:text-cyan-600" />
                         </button>
                     </div>
                 </div>
@@ -105,9 +102,7 @@ export const ContributionsListModal: React.FC<ContributionsListModalProps> = ({
                     {sortedContributions.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-                                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
+                                <MdContentPaste className="w-8 h-8 text-gray-400" />
                             </div>
                             <p className="text-gray-500 font-medium">No contributions yet</p>
                             <p className="text-sm text-gray-400 mt-1">Start adding contributions to track your progress</p>
@@ -128,9 +123,7 @@ export const ContributionsListModal: React.FC<ContributionsListModalProps> = ({
                                                 {formatCurrency(contribution.amount, currency)}
                                             </p>
                                             <p className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                </svg>
+                                                <MdCalendarToday className="w-4 h-4" />
                                                 {formatDate(contribution.date)}
                                             </p>
                                         </div>

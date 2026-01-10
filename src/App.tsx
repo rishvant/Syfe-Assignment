@@ -10,6 +10,8 @@ import { EditGoalModal } from './components/EditGoalModal';
 import { DeleteConfirmModal } from './components/DeleteConfirmModal';
 import { ContributionsListModal } from './components/ContributionsListModal';
 import { EmptyState } from './components/EmptyState';
+import { FaPlus } from "react-icons/fa6";
+import { TbCoinRupee } from "react-icons/tb";
 
 function App() {
   const [goals, setGoals] = useLocalStorage<Goal[]>('savings-goals', []);
@@ -109,15 +111,12 @@ function App() {
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
               <div className="bg-indigo-600 rounded-lg p-1.5">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <TbCoinRupee className="w-5 h-5 text-white" />
               </div>
               <h1 className="text-2xl font-bold text-indigo-600">
                 Syfe Savings Planner
               </h1>
             </div>
-            <p className="text-sm text-gray-600">Track your financial goals and build your future</p>
           </div>
         </div>
       </header>
@@ -147,9 +146,7 @@ function App() {
               onClick={() => setIsAddGoalModalOpen(true)}
               className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
+              <FaPlus />
               Add Goal
             </button>
           </div>
